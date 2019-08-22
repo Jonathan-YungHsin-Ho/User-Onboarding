@@ -30,6 +30,15 @@ const UserForm = ({ values, touched, errors, status }) => {
           <p>{errors.password}</p>
         )}
         <br />
+        <Field component='select' name='role'>
+          <option>Please select your role below:</option>
+          <option value='mentor'>Mentor</option>
+          <option value='mentee'>Mentee</option>
+        </Field>
+        {touched.role && errors.role && (
+          <p>{errors.role}</p>
+        )}
+        <br />
         <label>
           <Field name='tos' type='checkbox' checked={values.tos} />
           Terms of Service
