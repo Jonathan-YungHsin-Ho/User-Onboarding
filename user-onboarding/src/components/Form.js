@@ -52,6 +52,15 @@ const FormikUserForm = withFormik({
     password: Yup.string().required('Please enter your password'),
     tos: Yup.boolean().oneOf([true], 'Please agree with the Terms of Service to continue').required(),
   }),
+
+  handleSubmit(values) {
+    axios
+    .post('https://reqres.in/api/users', values)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => console.log(err));
+  }
 })(UserForm);
 
 export default FormikUserForm;
