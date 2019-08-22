@@ -31,13 +31,22 @@ const UserForm = ({ values, touched, errors, status }) => {
         )}
         <br />
         <Field component='select' name='role'>
-          <option>Please select your role below:</option>
+          <option>Please select your role:</option>
           <option value='mentor'>Mentor</option>
           <option value='mentee'>Mentee</option>
         </Field>
         {touched.role && errors.role && (
           <p>{errors.role}</p>
         )}
+        <br />
+        <Field name='location' type='text' placeholder='Location' />
+        {touched.location && errors.location && (
+          <p>{errors.location}</p>
+        )}
+        <br />
+        <Field name='language' component='textarea' type='text' placeholder='Programming language(s)' />
+        <br />
+        <Field name='about' component='textarea' type='text' placeholder='Tell us a little about yourself...' />
         <br />
         <label>
           <Field name='tos' type='checkbox' checked={values.tos} />
@@ -59,11 +68,15 @@ const UserForm = ({ values, touched, errors, status }) => {
 }
 
 const FormikUserForm = withFormik({
-  mapPropsToValues({ name, email, password, tos }) {
+  mapPropsToValues({ name, email, password, role, location, language, about, tos }) {
     return {
       name: name || '',
       email: email || '',
       password: password || '',
+      role: role || '',
+      location: location || '',
+      language: language || '',
+      about: about || '',
       tos: tos || false,
     };
   },
@@ -72,6 +85,10 @@ const FormikUserForm = withFormik({
     name: Yup.string().required('Name required'),
     email: Yup.string().email().required('Not a valid email address'),
     password: Yup.string().required('Please enter your password'),
+    role: Yup.string().required('Please select an option'),
+    location: Yup.string().required('Please enter your location'),
+    language: Yup.string().required('Please complete this section'),
+    about: Yup.string(),
     tos: Yup.boolean().oneOf([true], 'Please agree with the Terms of Service to continue').required(),
   }),
 
